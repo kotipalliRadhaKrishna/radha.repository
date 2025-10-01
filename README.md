@@ -1,3 +1,3 @@
 # radha.repository
 this is demo one
-authre-radha
+author-radha
