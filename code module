@@ -1,1 +1,49 @@
-print("hello")
+# tic_tac_toe.py
+def print_board(b):
+    print()
+    for i in range(3):
+        row = [b[3*i + j] if b[3*i + j] != " " else str(3*i + j + 1) for j in range(3)]
+        print(" " + " | ".join(row))
+        if i < 2:
+            print("---+---+---")
+    print()
+
+def check_winner(b):
+    wins = [(0,1,2),(3,4,5),(6,7,8),(0,3,6),(1,4,7),(2,5,8),(0,4,8),(2,4,6)]
+    for a,b1,c in wins:
+        if b[a] != " " and b[a] == b[b1] == b[c]:
+            return b[a]
+    if " " not in b:
+        return "Draw"
+    return None
+
+def valid_move(b, pos):
+    return 1 <= pos <= 9 and b[pos-1] == " "
+
+def main():
+    board = [" "] * 9
+    current = "X"
+    print("Tic-Tac-Toe — Two players. Enter cell number 1-9.")
+    while True:
+        print_board(board)
+        move = input(f"Player {current}, enter move (1-9): ")
+        if not move.isdigit():
+            print("Please enter a number 1-9.")
+            continue
+        pos = int(move)
+        if not valid_move(board, pos):
+            print("Invalid move. Try again.")
+            continue
+        board[pos-1] = current
+        result = check_winner(board)
+        if result:
+            print_board(board)
+            if result == "Draw":
+                print("It's a draw!")
+            else:
+                print(f"Player {result} wins! 🎉")
+            break
+        current = "O" if current == "X" else "X"
+
+if __name__ == "__main__":
+    main()
